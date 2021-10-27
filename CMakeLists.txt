@@ -50,7 +50,7 @@ include(cmake/nice_target_sources.cmake)
 include(cmake/init_target.cmake)
 include(cmake/external.cmake)
 
-add_library(mini_chromium_base)
+add_library(mini_chromium_base OBJECT)
 init_target(mini_chromium_base)
 
 set(mini_chromium_loc ${crashpad_loc}/third_party/mini_chromium)
@@ -159,7 +159,7 @@ PUBLIC
     ${mini_chromium_loc}
 )
 
-add_library(crashpad_util)
+add_library(crashpad_util OBJECT)
 init_target(crashpad_util)
 
 nice_target_sources(crashpad_util ${crashpad_loc}
@@ -399,7 +399,7 @@ PUBLIC
     mini_chromium_base
 )
 
-add_library(crashpad_minidump)
+add_library(crashpad_minidump OBJECT)
 init_target(crashpad_minidump)
 
 nice_target_sources(crashpad_minidump ${crashpad_loc}
@@ -459,7 +459,7 @@ PUBLIC
     crashpad_util
 )
 
-add_library(crashpad_tools)
+add_library(crashpad_tools OBJECT)
 init_target(crashpad_tools)
 
 nice_target_sources(crashpad_tools ${crashpad_loc}
@@ -478,7 +478,7 @@ PUBLIC
     mini_chromium_base
 )
 
-add_library(crashpad_common)
+add_library(crashpad_common OBJECT )
 init_target(crashpad_common)
 
 nice_target_sources(crashpad_common ${crashpad_loc}
@@ -503,7 +503,7 @@ PUBLIC
     crashpad_util
 )
 
-add_library(crashpad_snapshot)
+add_library(crashpad_snapshot OBJECT)
 init_target(crashpad_snapshot)
 
 nice_target_sources(crashpad_snapshot ${crashpad_loc}
@@ -617,6 +617,7 @@ PRIVATE
 target_link_libraries(crashpad_client
 PUBLIC
     crashpad_util
+    mini_chromium_base
 )
 
 add_executable(crashpad_handler)
@@ -654,6 +655,8 @@ PUBLIC
 
 target_link_libraries(crashpad_handler
 PRIVATE
+    mini_chromium_base
+    crashpad_util
     crashpad_tools
     crashpad_common
     crashpad_client
