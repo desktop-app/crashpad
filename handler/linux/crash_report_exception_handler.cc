@@ -274,6 +274,8 @@ bool CrashReportExceptionHandler::WriteMinidumpToDatabase(
 
   if (upload_thread_) {
     upload_thread_->ReportPending(uuid);
+  } else {
+    database_->SkipReportUpload(uuid, Metrics::CrashSkippedReason::kUploadsDisabled);
   }
 
   if (local_report_id != nullptr) {

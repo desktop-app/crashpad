@@ -148,6 +148,8 @@ unsigned int CrashReportExceptionHandler::ExceptionHandlerServerException(
 
     if (upload_thread_) {
       upload_thread_->ReportPending(uuid);
+    } else {
+      database_->SkipReportUpload(uuid, Metrics::CrashSkippedReason::kUploadsDisabled);
     }
   }
 

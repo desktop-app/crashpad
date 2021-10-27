@@ -190,6 +190,8 @@ kern_return_t CrashReportExceptionHandler::CatchMachException(
 
     if (upload_thread_) {
       upload_thread_->ReportPending(uuid);
+    } else {
+      database_->SkipReportUpload(uuid, Metrics::CrashSkippedReason::kUploadsDisabled);
     }
   }
 
