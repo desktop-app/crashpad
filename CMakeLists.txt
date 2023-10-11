@@ -6,7 +6,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CRASHPAD_SPECIAL_TARGET "" CACHE STRING "Use special platform target, like 'macstore' for Mac App Store.")
 
-set(CMAKE_OSX_DEPLOYMENT_TARGET 10.12 CACHE STRING "Minimum OS X deployment version" FORCE)
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13 CACHE STRING "Minimum OS X deployment version" FORCE)
 
 if (NOT CRASHPAD_SPECIAL_TARGET STREQUAL "")
     set(CRASHPAD_PACKAGED_BUILD 0)
@@ -46,6 +46,7 @@ else()
 endif()
 
 include(cmake/target_link_frameworks.cmake)
+include(cmake/target_link_options_if_exists.cmake)
 include(cmake/nice_target_sources.cmake)
 include(cmake/init_target.cmake)
 include(cmake/external.cmake)
@@ -672,4 +673,9 @@ PRIVATE
     Foundation
     IOKit
     Security
+)
+
+target_link_options_if_exists(crashpad_handler
+INTERFACE
+    -Wl,-ld_classic
 )
