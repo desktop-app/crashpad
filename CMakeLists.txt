@@ -676,6 +676,6 @@ PRIVATE
 )
 
 target_link_options_if_exists(crashpad_handler
-INTERFACE
+PRIVATE
     -Wl,-ld_classic
 )
